@@ -153,7 +153,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d1f9ce07007c124597bcaf6f2087401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::player_movement
-  move_speed: 500
+  move_speed: 7
+  jump_force: 15
+  ground_acceleration_rate: 50
+  air_acceleration_rate: 20
+  ground_dist: 0.25
+  ground_mask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!54 &372548549
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -188,7 +195,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 372548546}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: f1b03d00b6f8eba469530da966c80025, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -272,7 +279,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -10.98303, y: -0.56, z: -8.34795}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 712050121}
   m_Father: {fileID: 0}
@@ -291,6 +298,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Grapple
   grapplingHook: {fileID: 1654436441}
   grappleLine: {fileID: 1654436446}
+  maxGrappleDist: 50
+  grapplePullSpeed: 30
+  grappleSpeed: 100
 --- !u!1 &585146806
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,7 +577,7 @@ GameObject:
   - component: {fileID: 1009665248}
   - component: {fileID: 1009665247}
   - component: {fileID: 1009665246}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
