@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class Grapple : MonoBehaviour
 {
     Camera cameraChild;
-
+    Rigidbody rigBod;
     // Grapple things
     [SerializeField] GameObject grapplingHook;
     [SerializeField] LineRenderer grappleLine;
@@ -12,12 +12,11 @@ public class Grapple : MonoBehaviour
 
     Vector3 grappleTargetPoint = Vector3.zero;
     Vector3 grappleStartPoint = Vector3.zero;
-    float grappleTravelTime = 0.2f;
-    float grappleCurrentTime = 0f;
-
-
+    float grappleDistance = 0; // Target - Start for easier math
+    float grappleLerp = 0f; // Goes from 0 -> 1 per delta time
+    float grapplePullSpeed = 10f;
+    float grappleSpeed = 100;
     bool grappleHit = false;
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,6 +24,7 @@ public class Grapple : MonoBehaviour
         InputAction grapple_pressed = InputSystem.actions.FindAction("Attack");
 
         cameraChild = GetComponentInChildren<Camera>();
+        rigBod = GetComponent<Rigidbody>();
 
         grapple_pressed.started += GrappleStart;
         grapple_pressed.canceled += GrappleFinished;
@@ -55,6 +55,7 @@ public class Grapple : MonoBehaviour
             grappleLine.enabled = true;   
             grappleHit = false;
         }
+        grappleDistance = (grappleTargetPoint-grappleStartPoint).magnitude;
     }
 
     // Mouse release
@@ -68,19 +69,26 @@ public class Grapple : MonoBehaviour
     {
         grappleLine.enabled = false;
         grappleHit = false;
-        grappleCurrentTime = 0f;
+        grappleLerp = 0f;
     }
+
+    void GrapplePull()
+    {
+        Vector3 direction = grappleLine.GetPosition(1) - grappleLine.GetPosition(0);
+        Vector3 addedLinvelocity = direction.normalized * grapplePullSpeed;
+        rigBod.AddForce(addedLinvelocity, ForceMode.Force);
+    }
+
 
     // Update is called once per frame
     void LateUpdate()
     {
         if (grappleLine.enabled)
         {
-            if (grappleCurrentTime < grappleTravelTime)
+            if (grappleLerp < 1)
             {
-                grappleLine.SetPosition(1, Vector3.Lerp(grappleStartPoint, grappleTargetPoint, grappleCurrentTime/grappleTravelTime));
-                Debug.Log(grappleCurrentTime/grappleTravelTime);
-                grappleCurrentTime += Time.deltaTime;
+                grappleLine.SetPosition(1, Vector3.Lerp(grappleStartPoint, grappleTargetPoint, grappleLerp));
+                grappleLerp += Time.deltaTime * grappleSpeed / grappleDistance;
             }
             else
             {
@@ -92,6 +100,8 @@ public class Grapple : MonoBehaviour
                 {
                     ResetGrapple();
                 }
+
+                GrapplePull();
             }
 
             // Also move start to where player is now
