@@ -8,14 +8,14 @@ public class Grapple : MonoBehaviour
     // Grapple things
     [SerializeField] GameObject grapplingHook;
     [SerializeField] LineRenderer grappleLine;
-    float maxGrappleDist = 50f;
+    [SerializeField] float maxGrappleDist = 50f;
 
     Vector3 grappleTargetPoint = Vector3.zero;
     Vector3 grappleStartPoint = Vector3.zero;
     float grappleDistance = 0; // Target - Start for easier math
     float grappleLerp = 0f; // Goes from 0 -> 1 per delta time
-    float grapplePullSpeed = 10f;
-    float grappleSpeed = 100;
+    [SerializeField] float grapplePullSpeed = 10f;
+    [SerializeField] float grappleSpeed = 100;
     bool grappleHit = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
