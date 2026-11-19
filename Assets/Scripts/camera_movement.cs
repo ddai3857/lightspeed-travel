@@ -16,7 +16,7 @@ public class camera_movement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         Vector2 lookInput = lookAction.ReadValue<Vector2>();
 
