@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 public class StatusUI : UI
 {
-public static StatusUI instance = null;
+    public static StatusUI instance = null;
     VisualElement root;
     Label status;
     Label completeTime;
