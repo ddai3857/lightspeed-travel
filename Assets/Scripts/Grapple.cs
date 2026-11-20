@@ -16,7 +16,7 @@ public class Grapple : MonoBehaviour
     float grappleLerp = 0f; // Goes from 0 -> 1 per delta time
     [SerializeField] float grapplePullSpeed = 10f;
     [SerializeField] float grappleSpeed = 100;
-    bool grappleHit = false;
+    public bool grappleHit = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
