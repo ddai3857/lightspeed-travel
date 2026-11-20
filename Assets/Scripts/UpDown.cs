@@ -5,6 +5,7 @@ public class UpDown : MonoBehaviour
     public float speed = 2f;
     public float height = 3f;
     public float delay = 0f;
+    public Vector3 direction = Vector3.up;
 
     Vector3 startPos;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -17,7 +18,7 @@ public class UpDown : MonoBehaviour
     void Update()
     {
         float offset = Mathf.PingPong((Time.time + delay) * speed, height);
-        transform.position = startPos + new Vector3(0, offset, 0);
+        transform.position = startPos + direction.normalized * offset;
 
     }
 }
