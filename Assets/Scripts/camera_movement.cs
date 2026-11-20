@@ -18,19 +18,22 @@ public class camera_movement : MonoBehaviour
 
     private void Update()
     {
-        Vector2 lookInput = lookAction.ReadValue<Vector2>();
-
-        float mouseX = lookInput.x * mouseSensitivity;
-        float mouseY = lookInput.y * mouseSensitivity;
-
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-
-        if (playerBody != null)
+        if (Time.timeScale != 0) // For pausing game
         {
-            playerBody.Rotate(Vector3.up * mouseX);
+            Vector2 lookInput = lookAction.ReadValue<Vector2>();
+
+            float mouseX = lookInput.x * mouseSensitivity;
+            float mouseY = lookInput.y * mouseSensitivity;
+
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+
+            if (playerBody != null)
+            {
+                playerBody.Rotate(Vector3.up * mouseX);
+            }
         }
     }
 }

@@ -33,6 +33,14 @@ public class Grapple : MonoBehaviour
         grappleLine.enabled = false;
     }
 
+    void OnDestroy()
+    {
+        InputAction grapple_pressed = InputSystem.actions.FindAction("Attack");
+
+        grapple_pressed.started -= GrappleStart;
+        grapple_pressed.canceled -= GrappleFinished;
+    }
+
     // Mouse down
     void GrappleStart(InputAction.CallbackContext context)
     {
