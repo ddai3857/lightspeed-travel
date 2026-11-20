@@ -392,7 +392,7 @@ MonoBehaviour:
   dash_speed: 50
   dash_end_speed: 25
   dash_cooldown: 1
-  fall_limit: 0
+  fall_limit: 50
 --- !u!114 &2881166317002825453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,7 +407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Grapple
   grapplingHook: {fileID: 1166653760025444595}
   grappleLine: {fileID: 7645651059850004603}
-  maxGrappleDist: 50
+  maxGrappleDist: 30
   grapplePullSpeed: 30
   grappleSpeed: 100
   grappleHit: 0
