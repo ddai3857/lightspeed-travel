@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (player_start_y - transform.position.y > fall_limit)
         {
-            // SceneManager.LoadScene();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         if (jump.WasPressedThisFrame())
         {

@@ -370,6 +370,7 @@ MonoBehaviour:
   dash_speed: 40
   dash_end_speed: 20
   dash_cooldown: 1
+  fall_limit: 50
 --- !u!114 &5371867656790698648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,6 +388,7 @@ MonoBehaviour:
   maxGrappleDist: 50
   grapplePullSpeed: 30
   grappleSpeed: 100
+  grappleHit: 0
 --- !u!1 &8417719339308241384
 GameObject:
   m_ObjectHideFlags: 0
