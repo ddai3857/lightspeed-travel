@@ -358,8 +358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d1f9ce07007c124597bcaf6f2087401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::player_movement
-  move_speed: 7
-  jump_force: 15
+  move_speed: 10
+  jump_force: 20
   ground_acceleration_rate: 50
   air_acceleration_rate: 15
   ground_dist: 0.25
@@ -368,7 +368,7 @@ MonoBehaviour:
     m_Bits: 64
   dash_duration: 0.25
   dash_speed: 40
-  dash_end_speed: 20
+  dash_end_speed: 30
   dash_cooldown: 1
   fall_limit: 50
 --- !u!114 &5371867656790698648
