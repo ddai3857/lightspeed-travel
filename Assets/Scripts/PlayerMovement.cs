@@ -2,13 +2,16 @@ using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(Grapple))]
 public class PlayerMovement : MonoBehaviour
 {
     Rigidbody rb;
     CapsuleCollider col;
     Camera cam;
+    Grapple grapple;
     InputAction move;
     InputAction jump;
     InputAction dash;
@@ -30,12 +33,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dash_end_speed;
 
     [SerializeField] float dash_cooldown;
+    [SerializeField] float fall_limit;
 
     bool jump_pressed = false;
     bool is_grounded = true;
 
     bool can_dash = true;
+    bool dash_up = true;
     bool is_dashing = false;
+    float player_start_y = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -43,27 +49,30 @@ public class PlayerMovement : MonoBehaviour
         cam = GetComponentInChildren<Camera>();
         rb = GetComponent<Rigidbody>();
         col = GetComponent<CapsuleCollider>();
+        grapple = GetComponent<Grapple>();
         move = InputSystem.actions.FindAction("Move");
         jump = InputSystem.actions.FindAction("Jump");
         dash = InputSystem.actions.FindAction("Dash");
+
+        player_start_y = transform.position.y;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (player_start_y - transform.position.y > fall_limit)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
         if (jump.WasPressedThisFrame())
         {
             jump_pressed = true;
         }
 
-        if (dash.WasPressedThisFrame() && can_dash)
+        if (dash.WasPressedThisFrame() && can_dash && dash_up)
         {
             StartCoroutine(Dash());
         }
-
-        Debug.Log("ISGROUNED: " + is_grounded);
-        Debug.Log("CANDASH: " + can_dash);
-
     }
 
     void CheckGrounded()
@@ -137,20 +146,30 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator Dash()
     {
+        dash_up = false;
         can_dash = false;
         is_dashing = true;
+
         bool prev_gravity = rb.useGravity;
         rb.useGravity = false;
-
         rb.linearVelocity = GetMoveDirection(true) * dash_speed;
+
         yield return new WaitForSeconds(dash_duration);
         
         rb.linearVelocity = rb.linearVelocity.normalized * dash_end_speed;
         rb.useGravity = prev_gravity;
+
         is_dashing = false;
 
+        StartCoroutine(CheckDashRequirements());
         yield return new WaitForSeconds(dash_cooldown);
-        yield return new WaitUntil(() => is_grounded);
+
+        dash_up = true;
+    }
+
+    IEnumerator CheckDashRequirements()
+    {
+        yield return new WaitUntil(() => is_grounded || grapple.grappleHit);
         can_dash = true;
     }
 }

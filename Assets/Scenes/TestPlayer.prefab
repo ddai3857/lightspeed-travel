@@ -232,14 +232,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8407288173747025489}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.8991758, z: 0, w: 0.4375877}
+  m_LocalRotation: {x: 0, y: 0.8991763, z: 0, w: 0.43758664}
   m_LocalPosition: {x: -11.195755, y: 14.488709, z: 3.4284062}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2685831092888124949}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 128.1, z: 0}
 --- !u!33 &6772714970948996017
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -389,9 +389,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   dash_duration: 0.25
-  dash_speed: 40
-  dash_end_speed: 20
+  dash_speed: 50
+  dash_end_speed: 25
   dash_cooldown: 1
+  fall_limit: 0
 --- !u!114 &2881166317002825453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,6 +410,7 @@ MonoBehaviour:
   maxGrappleDist: 50
   grapplePullSpeed: 30
   grappleSpeed: 100
+  grappleHit: 0
 --- !u!1 &8777065300746720510
 GameObject:
   m_ObjectHideFlags: 0
